@@ -1,0 +1,19 @@
+#!/bin/bash
+# check if the current directory is a Git repository
+if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+  echo "This is not a Git repository. Please navigate to a Git repository directory."
+  exit 1
+fi
+
+# Add all changes
+git add .
+
+# Prompt for a commit message
+read -p "Enter your commit message: " commit_message
+
+# Commit with the provided message
+git commit -m "$commit_message"
+
+# Push the changes to the remote repository
+git push
+
