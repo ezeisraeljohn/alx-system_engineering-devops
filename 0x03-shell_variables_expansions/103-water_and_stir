@@ -1,2 +1,2 @@
 #!/bin/bash
-BESTCHOL=$((WATER + STIR)); echo "The sum of WATER and STIR is: $BESTCHOL"
+echo $(((($water#$WATER +$stir#$STIR)))
