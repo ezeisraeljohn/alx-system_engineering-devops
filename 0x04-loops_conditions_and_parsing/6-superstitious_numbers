@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Print "Best School" 20 times
+
+count=1
+
+while [ "$count" -le 20 ]
+do
+    if [ $count = 4 ]
+    then
+        echo $count
+        echo "bad luck from China"
+    elif [ $count = 9 ]
+    then
+        echo $count
+        echo "bad luck from Japan"
+
+    elif [ $count = 17 ]
+    then
+        echo $count
+        echo "bad luck from Italy"
+    else
+        echo $count
+    fi
+
+    ((count++))
+done
