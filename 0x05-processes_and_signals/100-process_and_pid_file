@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Create directories and the PID file
+
+mkdir -p var/run && touch var/run/myscript.pid && echo $$ > var/run/myscript.pid
+
+# Set up signal handlers outside the loop
+trap 'echo "I hate the kill command"' SIGTERM
+trap 'echo "Y U no love me?!"' SIGQUIT SIGINT
+trap 'cleanup_and_exit' SIGQUIT SIGTERM
+
+# Function to clean up and exit
+cleanup_and_exit() {
+    rm -f var/run/myscript.pid
+    kill $$
+}
+
+while true; do
+    echo "To infinity and beyond"
+    sleep 1
+done
