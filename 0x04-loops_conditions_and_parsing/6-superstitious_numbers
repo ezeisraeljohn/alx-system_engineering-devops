@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Print "Best School" 20 times
 
 count=1
