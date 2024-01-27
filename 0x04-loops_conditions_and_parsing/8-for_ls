@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#display content of the directory in list format
+
+my_list="echo $(ls)"
+
+value=$my_list
+
+for files in $value
+do
+    echo "$files"
+done
