@@ -7,5 +7,5 @@ value=$my_list
 
 for files in $value
 do
-    echo "$files"
+    echo "$files " | cut -d "-" -f 2-
 done
