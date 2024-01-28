@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #display content of the directory in list format
 
-my_list="echo $(ls)"
+my_list=$(ls)
 
 value=$my_list
 
