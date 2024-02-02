@@ -1,5 +1,5 @@
-#!/bin/env bash
-# THis will be ping an IP address
+#!/usr/bin/env bash
+# This will be ping an IP address
 
 ip_address=$1
 
