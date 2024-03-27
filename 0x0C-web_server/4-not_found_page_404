@@ -1,42 +1,20 @@
-#!/bin/env/bash
-#configuring new ubuntu server
+#!/usr/bin/env bash
+# Install Nginx package
 
-# Update package repositories
-sudo apt update
+sudo apt-get update
+sudo apt-get install -y nginx
 
-# Install Nginx
-sudo apt install -y nginx
+# Create custom 404 page with desired content
+sudo mkdir -p /usr/share/nginx/html
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html >/dev/null
 
-# Configure Nginx to listen on port 80 and serve a specific webpage content
-cat << EOF | sudo tee /etc/nginx/sites-available/default > /dev/null
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+# Configure Nginx to use the custom 404 page
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/custom_404
+sudo sed -i '/error_page/c\    error_page 404 /404.html;' /etc/nginx/sites-available/custom_404
+sudo sed -i '/location \/ {/a\        location = /404.html {\n            internal;\n            root /usr/share/nginx/html;\n            index index.html;\n            return 404 "Ceci n'\''est pas une page\n";\n        }\n' /etc/nginx/sites-available/custom_404
 
-    root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
+# Enable the custom 404 site
+sudo ln -s /etc/nginx/sites-available/custom_404 /etc/nginx/sites-enabled/
 
-    server_name _;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-
-    error_page 404 /404.html;
-    location = /404.html {
-        root /var/www/html;
-        internal;
-        default_type text/html;
-        echo "404 Page Not Found";
-    }
-}
-EOF
-
-# Create a custom 404 error page
-sudo bash -c 'echo "404 Page Not Found" > /var/www/html/404.html'
-
-# Restart Nginx to apply changes
-sudo service nginx restart
-
-# Verify Nginx status
-sudo servuce nginx status
+# Test Nginx configuration and restart Nginx
+sudo nginx -t && sudo systemctl restart nginx
