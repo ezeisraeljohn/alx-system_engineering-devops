@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Installing and Configuring Nginx Web Server
+
+# Install nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 'OpenSSH'
+
+# Set up directory for the HTML page
+sudo mkdir -p /var/www/html
+
+# Set ownership and permissions for the directory
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www/html
+
+# Create the sample index.html page
+cat <<EOF | sudo tee /var/www/html/index.html
+Hello World!
+EOF
+
+# Configure Nginx to serve the index.html page
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/html
+sudo sed -i 's|root\s*/var/www/html;|root /var/www/html;|' /etc/nginx/sites-available/html
+sudo sed -i 's/listen\s*\(.*\);/listen 80;/' /etc/nginx/sites-available/html
+# Enable the server block
+sudo ln -s /etc/nginx/sites-available/html /etc/nginx/sites-enabled/
+sudo service nginx restart
+
+REDIRECT_CONF="/etc/nginx/sites-available/redirect_me"
+
+sudo tee "$REDIRECT_CONF" > /dev/null <<EOF
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name _;
+
+    location /redirect_me {
+        return 301 https://example.com/new_page;
+    }
+
+    # Redirect all other requests to the default Nginx welcome page
+    location / {
+        return 301 https://\$host;
+    }
+}
+EOF
+
+# Create a symbolic link to enable the redirection server block
+sudo ln -s "$REDIRECT_CONF" /etc/nginx/sites-enabled/
+
+# Test Nginx configuration
+sudo nginx -t
+sudo service nginx restart
