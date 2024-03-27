@@ -24,33 +24,8 @@ EOF
 sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/html
 sudo sed -i 's|root\s*/var/www/html;|root /var/www/html;|' /etc/nginx/sites-available/html
 sudo sed -i 's/listen\s*\(.*\);/listen 80;/' /etc/nginx/sites-available/html
+sed -i '/^server {/a \    location \/redirect_me {\n        return 301 https:\/\/www.youtube.com;\n    }' /etc/nginx/sites-available/default
+
 # Enable the server block
 sudo ln -s /etc/nginx/sites-available/html /etc/nginx/sites-enabled/
-sudo service nginx restart
-
-REDIRECT_CONF="/etc/nginx/sites-available/redirect_me"
-
-sudo tee "$REDIRECT_CONF" > /dev/null <<EOF
-server {
-    listen 80;
-    listen [::]:80;
-
-    server_name _;
-
-    location /redirect_me {
-        return 301 https://example.com/new_page;
-    }
-
-    # Redirect all other requests to the default Nginx welcome page
-    location / {
-        return 301 https://\$host;
-    }
-}
-EOF
-
-# Create a symbolic link to enable the redirection server block
-sudo ln -s "$REDIRECT_CONF" /etc/nginx/sites-enabled/
-
-# Test Nginx configuration
-sudo nginx -t
 sudo service nginx restart
