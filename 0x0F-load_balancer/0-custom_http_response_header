@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# SSH into web-01
-
-ssh ubuntu@52.201.219.230
+# SSH into web-01 and web-02 servers
 
 # Use sed to add the custom header inside the http block in nginx.conf
 sudo sed -i '/http {/a \    add_header X-Served-By "527246-web-01";' /etc/nginx/nginx.conf
@@ -9,17 +7,9 @@ sudo sed -i '/http {/a \    add_header X-Served-By "527246-web-01";' /etc/nginx/
 # Reload Nginx to apply the changes
 sudo service nginx restart
 
-# Exit from web-01
-exit
-
-# SSH into web-02
-ssh ubuntu@"3.85.41.33"
 
 # Use sed to add the custom header inside the http block in nginx.conf
 sudo sed -i '/http {/a \    add_header X-Served-By "527246-web-02";' /etc/nginx/nginx.conf
 
 # Reload Nginx to apply the changes
 sudo service nginx restart
-
-# Exit from web-02
-exit
