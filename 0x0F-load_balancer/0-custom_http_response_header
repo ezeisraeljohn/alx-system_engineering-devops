@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script is used to add custom HTTP response headers to the HTTP response
+
+# Add the custom HTTP response headers to the HTTP response for web-01
+curl -sXI POST "52.201.219.230" -H "X-Served-By: 527246-web-01" 
+
+#Add the custom HTTP response headers to the HTTP response for web-02
+curl -sXI POST "3.85.41.33" -H "X-Served-By: 527246-web-02" 
