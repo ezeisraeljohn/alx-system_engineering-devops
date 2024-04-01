@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# This will install and configure the load balancer
+
+# Install the load balancer
+sudo apt install software-properties-common -y
+
+# Add the repository
+sudo  add-apt-repository ppa:vbernat/haproxy-2.8 -y
+
+# Update the repository
+sudo apt update
+
+# Install the load balancer
+sudo apt install haproxy -y
+
+# Configure the load balancer
+cp -a /etc/haproxy/haproxy.cfg{,.orig}
+
+# Create a new configuration file
+cat <<EOF > /etc/haproxy/haproxy.cfg
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+
+    # Default SSL material locations
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+
+    # Default ciphers to use on SSL-enabled listening sockets.
+    # For more information, see ciphers(1SSL). This list is from:
+    #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
+    ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!MD5:!DSS
+    ssl-default-bind-options no-sslv3
+
+    frontend haproxy-main
+        bind *:80
+        option forwardfor  
+        default_backend nginx_webservers    
+
+    backend nginx_webservers
+        balance roundrobin
+        server websvr1 52.201.219.230:80 check
+        server websvr2 3.85.41.33:80 check
+
+EOF
+
+if [ -x "/etc/init.d/haproxy" ]; then
+    /etc/init.d/haproxy restart
+else
+    sudo service haproxy restart
+fi
