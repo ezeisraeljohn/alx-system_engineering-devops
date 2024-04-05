@@ -2,14 +2,7 @@
 # SSH into web-01 and web-02 servers
 
 # Use sed to add the custom header inside the http block in nginx.conf
-sudo sed -i '/http {/a \    add_header X-Served-By "$hostname";' /etc/nginx/nginx.conf
-
-# Reload Nginx to apply the changes
-sudo service nginx restart
-
-
-# Use sed to add the custom header inside the http block in nginx.conf
-sudo sed -i '/http {/a \    add_header X-Served-By "$hostname";' /etc/nginx/nginx.conf
+sudo sed -i '/http {/a \    add_header X-Served-By "$HOSTNAME";' /etc/nginx/nginx.conf
 
 # Reload Nginx to apply the changes
 sudo service nginx restart

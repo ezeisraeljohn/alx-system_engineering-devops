@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Check if a domain name is provided as an argument
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <domain>"
+    exit 1
+fi
+
+domain="$1"
+
+# List of subdomains to check
+subdomains=(
+    "www"
+    "lb-01"
+    "web-01"
+    "web-02"
+)
+
+# Loop through each subdomain and dig it
+for subdomain in "${subdomains[@]}"; do
+    dig "$subdomain.$domain" | grep -A1 "ANSWER SECTION" | awk '/www/ || /lb-01/ || /web-01/ || /web-02/ {print "The sub domain", $1, "is a", $4, "record", "pointing to", $5}'
+done
