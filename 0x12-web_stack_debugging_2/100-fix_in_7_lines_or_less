@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Starts here
+service nginx stop
+sed -i 's/user\s*nginx;/user nginx nginx;/' /etc/nginx/nginx.conf
+service nginx start
+netstat -tuln | grep 8080
+
