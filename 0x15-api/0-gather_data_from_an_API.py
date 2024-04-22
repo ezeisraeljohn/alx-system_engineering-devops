@@ -14,12 +14,12 @@ if __name__ == "__main__":
     NAME = r_employee.json().get('name')
 
     # The total number of task assigned to this employee
-    tasks = [task for task in r_todos.json() if int(task["userId"]) == int(id)]
+    tasks = [task for task in r_todos.json() if int(task.get("userId")) == int(id)]
 
     # Get the total task done by the employee
     count = 0
     for task in tasks:
-        if str(task["completed"]) == "True":
+        if str(task.get("completed")) == "True":
             count = count + 1
 
     TOTAL_TASKS = len(tasks)
@@ -29,5 +29,5 @@ if __name__ == "__main__":
     print(f"Employee {NAME} is done with tasks({DONE_TASKS}/{TOTAL_TASKS}):")
 
     for task in tasks:
-        if "True" in str(task["completed"]):
+        if "True" in str(task.get("completed")):
             print("\t {}".format(task["title"]))
