@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
-"""This module talks about how this will be implemented
-"""
+""" This module talks about how this will be implemented """
 
 from sys import argv
 import requests
