@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-""" Gets a todo from a web api """
+"""This module talks about how this will be implemented
+"""
 
 from sys import argv
 import requests
