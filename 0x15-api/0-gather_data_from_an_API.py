@@ -2,6 +2,7 @@
 
 """ Gets a todo from a web api """
 
+
 import requests
 from sys import argv
 
