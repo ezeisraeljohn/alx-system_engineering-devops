@@ -4,11 +4,11 @@
 
 from sys import argv
 import requests
-gett = __import__("0-gather_data_from_an_API")
 
 
 userId = argv[1]
 if __name__ == "__main__":
+    gett = __import__("0-gather_data_from_an_API")
     r_todos = requests.get("https://jsonplaceholder.typicode.com/todos/")
     r_employee = requests.get('https://jsonplaceholder.typicode.com/users/{}'
                               .format(userId))
