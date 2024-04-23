@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
-""" This scipt stores data in a csv file """
-
+""" The Documented module """
 
 from sys import argv
 import requests
