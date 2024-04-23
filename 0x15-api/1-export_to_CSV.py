@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" The Documented module """
+""" Gets a todo from a web api """
 
 from sys import argv
 import requests
