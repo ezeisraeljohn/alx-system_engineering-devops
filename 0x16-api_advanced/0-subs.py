@@ -9,7 +9,7 @@ from sys import argv
 def number_of_subscribers(subreddit):
     """ Function returning total number of subscribers """
 
-    url = f'http://reddit.com/r/{subreddit}/about.json'
+    url = 'http://reddit.com/r/{}/about.json'.format(subreddit)
 
     response = requests.get(url=url, headers={'user-agent': 'user_agent'},
                             allow_redirects=False)
