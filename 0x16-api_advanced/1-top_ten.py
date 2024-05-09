@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+
+""" This script will retrieve top ten post of a subreddit"""
 import requests
 from pprint import pprint
 from sys import argv
@@ -26,6 +28,3 @@ def top_ten(subreddit):
         posts.append(post_info)
 
         return posts
-
-
-print(top_ten(argv[1]))
