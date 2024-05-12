@@ -1,14 +1,12 @@
-# Debugs a php file
-$settings_file = '/var/www/html/wp-settings.php'
+# this manifest fixes a misconfiguration that caused server error 500
 
+$settings_file='/var/www/html/wp-settings.php'
 file { $settings_file:
   ensure => file,
 }
 
-exec { 'fix_typo_in_settings_config':
-  command     => "sed -i 's/phpp/php/g' ${settings_file}",
-  path        => ['/bin', '/usr/bin', '/usr/sbin'],
-  refreshonly => true,
-  subscribe   => File[$settings_file],
+exec {'fix typo in settings config':
+  path    => ['/bin/', '/usr/bin/', '/usr/sbin/'],
+  command => "sed -i s/phpp/php/g ${settings_file}",
+  require => File[$settings_file],
 }
-
