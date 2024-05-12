@@ -1,3 +1,4 @@
+# Debugs a php file
 $settings_file = '/var/www/html/wp-settings.php'
 
 file { $settings_file:
