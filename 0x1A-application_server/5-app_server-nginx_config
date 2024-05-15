@@ -22,7 +22,7 @@ server {
     }
 
     location /static/ {
-        root /home/ubuntu/AirBnB_clone_v4/web_dynamic/static/;
+        alias ~/AirBnB_clone_v4/web_dynamic/static/;
     }
 
     location / {
