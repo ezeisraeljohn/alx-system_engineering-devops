@@ -23,6 +23,7 @@ server {
 
     location /static/ {
         alias ~/AirBnB_clone_v4/web_dynamic/static/;
+	add_header X_Served_By "$HOSTNAME";
     }
 
     location / {
