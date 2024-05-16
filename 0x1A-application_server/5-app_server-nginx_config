@@ -3,6 +3,8 @@ server {
     listen [::]:80 default_server;
 
     server_name _;
+    access_log /tmp/airbnb-access.log;
+    error_log /tmp/airbnb-error.log;
 
     location /airbnb-onepage/ {
         proxy_pass http://localhost:5000;
@@ -10,24 +12,23 @@ server {
 
     }
     location ~ ^/airbnb-dynamic/number_odd_or_even/(\d+)$ {
-        proxy_pass http://localhost:5001;
-        add_header X_Served_By "$HOSTNAME";
+       proxy_pass http://localhost:5001;
+       add_header X_Served_By "$HOSTNAME";
 
-    }
-    location /api/ {
-        rewrite ^/api(/.*)$ /api$1 break;
-        proxy_pass http://localhost:5002;
-        add_header X_Served_By "$HOSTNAME";
+   }
+   location /api/ {
+       rewrite ^/api(/.*)$ /api$1 break;
+       proxy_pass http://localhost:5002;
+       add_header X_Served_By "$HOSTNAME";
 
-    }
+   }
 
-    location /static/ {
-        alias ~/AirBnB_clone_v4/web_dynamic/static/;
-	add_header X_Served_By "$HOSTNAME";
-    }
+   location /static/ {
+       root /home/ubuntu/AirBnB_clone_v4/web_dynamic/;
+   }
 
-    location / {
-        proxy_pass http://localhost:5003;
-        add_header X_Served_By "$HOSTNAME";
-    }
-}
+   location / {
+      proxy_pass http://localhost:5003;
+      add_header X_Served_By "$HOSTNAME";
+   }
+} 
