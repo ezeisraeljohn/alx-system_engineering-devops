@@ -10,5 +10,12 @@ Restart=always
 StandardOutput=append:/tmp/airbnb-access.log
 StandardError=append:/tmp/airbnb-error.log
 
+Environment="HBNB_ENV=dev"
+Environment="HBNB_STORAGE_TYPE=db"
+Environment="HBNB_MYSQL_PWD=hbnb_dev_pwd"
+Environment="HBNB_MYSQL_USER=hbnb_dev"
+Environment="HBNB_MYSQL_HOST=localhost"
+Environment="HBNB_MYSQL_STORAGE="db"
+
 [Install]
 WantedBy=multi-user.target
